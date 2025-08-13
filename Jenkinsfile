@@ -19,27 +19,34 @@ pipeline {
                 }
             }
    
-            stage('Build Docker Image') {
-                steps {
-                    script {
-                        // Ensure Docker is available and build the image
-                        sh "docker build -t ${DOCKER_HUB_USERNAME}/${IMAGE_NAME}:${IMAGE_TAG} ."
-                    }
+           
+                 stage('Build Docker Image') {
+                     steps {
+                         withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+      usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                             script {
+                                 // Ensure Docker is available and build the image
+                                 sh "docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
+                             }
+                         }
+                     }
                 }
-            }
    
-            stage('Push Docker Image') {
-                steps {
-                    script {
-                        // Login to Docker Hub
-                        sh "echo -n ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USERNAME} --password-stdin"
-                        // Push the image
-                        sh "docker push ${DOCKER_HUB_USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}"
-                        // Logout from Docker Hub
-                        sh "docker logout"
+             stage('Push Docker Image') {
+                     steps {
+                         withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+      usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                             script {
+                                 // Login to Docker Hub
+                                 sh "echo -n ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
+                                 // Push the image
+                                 sh "docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
+                                 // Logout from Docker Hub
+                                sh "docker logout"
+                            }
+                        }
                     }
                 }
-            }
    
             stage('Deploy to Kubernetes') {
                 steps {
