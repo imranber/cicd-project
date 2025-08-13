@@ -50,11 +50,12 @@ pipeline {
                 steps {
                     script {
                        
-                        sh "minikube kubectl -- apply -f k8s-manifests/deployment.yaml"
-                        sh "minikube kubectl -- apply -f k8s-manifests/service.yaml"
+                      
+                       sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- apply -f k8s-manifests/deployment.yaml"
+                       sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- apply -f k8s-manifests/service.yaml"
    
-                       
-                        sh "minikube kubectl -- rollout status deployment/${KUBERNETES_DEPLOYMENT_NAME}"
+                        // Optional: Rollout status check
+                        sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- rollout status deployment/${KUBERNETES_DEPLOYMENT_NAME}"
                     }
                 }
             }
