@@ -10,10 +10,12 @@ pipeline {
         }
    
         stages {
-            stage('Checkout Code') {
+             stage('Checkout Code') {
                 steps {
-                    git branch: 'main', url: 'https://github.com/imranber/cicd-project.git' // Your GitHub repo
-      URL
+                    script {
+                        git branch: 'main', url: 'https://github.com/imranber/cicd-project.git' // Your GitHub
+     repo URL
+                    }
                 }
             }
    
