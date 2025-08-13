@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicd-app-deployment
+  labels:
+    app: cicd-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cicd-app
+  template:
+    metadata:
+      labels:
+        app: cicd-app
+    spec:
+      containers:
+      - name: cicd-app
+        image: cicd-app:latest # This will use the image we built locally
+        imagePullPolicy: Never # Important for local images, tells K8s not to try pulling from a registry
+        ports:
+        - containerPort: 8080
