@@ -1,8 +1,6 @@
 pipeline {
   agent any
        environment {
-          DOCKER_HUB_USERNAME = credentials('dockerhub-credentials').getUsername()
-          DOCKER_HUB_PASSWORD = credentials('dockerhub-credentials').getPassword()
            IMAGE_NAME = 'cicd-app'
              IMAGE_TAG = 'latest'
              KUBERNETES_DEPLOYMENT_NAME = 'cicd-app-deployment'
