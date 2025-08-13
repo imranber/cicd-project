@@ -24,7 +24,7 @@ pipeline {
       usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                              script {
                                  
-                                 sh "docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
+                                 sh "docker build --no-cache -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
                              }
                          }
                      }
