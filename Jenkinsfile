@@ -46,18 +46,18 @@ pipeline {
                     }
                 }
    
-            stage('Deploy to Kubernetes') {
-                steps {
-                    script {
+           // stage('Deploy to Kubernetes') {
+             //   steps {
+               //     script {
                        
                       
-                       sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- apply -f k8s-manifests/deployment.yaml"
-                       sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- apply -f k8s-manifests/service.yaml"
+                 //      sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- apply -f k8s-manifests/deployment.yaml"
+                   //    sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- apply -f k8s-manifests/service.yaml"
    
                         // Optional: Rollout status check
-                        sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- rollout status deployment/${KUBERNETES_DEPLOYMENT_NAME}"
-                    }
-                }
-            }
-        }
-    }
+                     //   sh "KUBECONFIG=/home/jenkins/.kube/config minikube kubectl -- rollout status deployment/${KUBERNETES_DEPLOYMENT_NAME}"
+                    //}
+                //}
+            //}
+        //}
+    //}
